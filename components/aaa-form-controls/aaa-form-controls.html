@@ -1,0 +1,152 @@
+<!--
+@license
+Copyright (c) 2014 Aureus Arcus Advising Ltd. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+Author: Will Hopkins
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../font-roboto/roboto.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+
+<!--
+Element provides a set of navigation controls and buttons for a form. 
+
+##### Example
+    <aaa-form-controls id="controls" on-formaction="{{formAction}}" formControlID="{{formControlID}}">
+    </aaa-form-controls>
+
+@element aaa-form-controls
+@blurb A set of controls for form actions 
+@status alpha
+@homepage https://github.com/Will-in-BC/aaa-form-controls.git
+
+Techniques illustrated:
+  -- data binding
+  -- custom events
+-->
+
+<style>
+paper-input-decorator {
+  max-width: 150px;
+}
+html /deep/ .aaa-form-controls-button-box {
+  width:100px;
+  padding:3px 0px;
+}
+</style>
+<polymer-element name="aaa-form-controls">
+  <template>
+    <div id='container'>
+      <div layout center-justified center style='width:50%'>
+        <div layout horizontal center-justified center>
+          <paper-icon-button raised class="disableWaitingforResponse" id="previousButton" icon='arrow-back' on-tap="{{previousClicked}}">
+          </paper-icon-button>
+          <paper-input-decorator class="disableWaitingforResponse labelRefresh" label=" Enter ID">
+            <input is="core-input" class="disableWaitingforResponse" type=number value="{{formControlID}}"></input>
+          </paper-input-decorator>
+          <paper-icon-button raised class="disableWaitingforResponse" id="nextButton" icon='arrow-forward' on-tap="{{nextClicked}}">
+          </paper-icon-button>
+        </div>
+        <div layout horizontal center-justified wrap >
+          <div class='aaa-form-controls-button-box' layout horizontal center center-justified>
+            <paper-button raised class="disableWaitingforResponse" id="createButton" on-tap="{{createClicked}}">
+              Create
+            </paper-button>
+          </div>
+          <div class='aaa-form-controls-button-box' layout horizontal center center-justified>
+            <paper-button raised class="disableWaitingforResponse" id="retrieveButton" on-tap="{{retrieveClicked}}">
+              Retrieve
+            </paper-button>
+          </div>
+          <div class='aaa-form-controls-button-box' layout horizontal center center-justified>
+            <paper-button raised class="disableWaitingforResponse" id="updateButton" on-tap="{{updateClicked}}">
+              Update
+            </paper-button>
+          </div>
+          <div class='aaa-form-controls-button-box' layout horizontal center center-justified>
+            <paper-button raised class="disableWaitingforResponse" id="deleteButton" on-tap="{{deleteClicked}}">
+              Delete
+            </paper-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      /**
+       * Any formaction
+       *
+       * @event formaction
+      */
+       publish: {
+       /**
+         * The value of the input field on the control 
+         *
+         * @attribute formControlID
+         * @type string
+         * @default empty string
+         *
+      */
+        formControlID: "",
+      },
+      createClicked: function(e) {
+        formActionDetail = {};
+        formActionDetail.formControlID = this.formControlID;
+        formActionDetail.action = 'create';
+        this.fire('formaction',formActionDetail);
+      },
+      retrieveClicked: function(e) {
+        formActionDetail = {};
+        formActionDetail.formControlID = this.formControlID;
+        formActionDetail.action = 'retrieve';
+        this.fire('formaction',formActionDetail);
+      },
+      updateClicked: function(e) {
+        formActionDetail = {};
+        formActionDetail.formControlID = this.formControlID;
+        formActionDetail.action = 'update';
+        this.fire('formaction',formActionDetail);
+      },
+      deleteClicked: function(e) {
+        formActionDetail = {};
+        formActionDetail.formControlID = this.formControlID;
+        formActionDetail.action = 'delete';
+        this.fire('formaction',formActionDetail);
+      },
+      nextClicked: function(e) {
+        formActionDetail = {};
+        formActionDetail.formControlID = this.formControlID;
+        formActionDetail.action = 'next';
+        this.fire('formaction',formActionDetail);
+      },
+      previousClicked: function(e) {
+        formActionDetail = {};
+        formActionDetail.formControlID = this.formControlID;
+        formActionDetail.action = 'previous';
+        this.fire('formaction',formActionDetail);
+      },
+
+        /**
+         * Invoke this method to disable or enable the controls 
+         *
+         * @method inputState(state)
+         * @type method
+         * @default NA
+         */
+
+      inputState: function(state) {
+        [].forEach.call(
+          this.$.container.querySelectorAll('.disableWaitingforResponse'), 
+          function(el){
+            el.disabled = (state==="disable")?true:false;
+          }
+        ); 
+      }, // end inputState
+    }); // end Polymer
+  </script>
+</polymer-element>
