@@ -29,19 +29,19 @@ Techniques illustrated:
   -- custom events
 -->
 
-<style>
-paper-input-decorator {
-  max-width: 150px;
-}
-html /deep/ .aaa-form-controls-button-box {
-  width:100px;
-  padding:3px 0px;
-}
-</style>
 <polymer-element name="aaa-form-controls">
   <template>
+    <style>
+    .aaa-form-controls-button-box {
+      width:100px;
+      padding:3px 0px;
+    }
+    paper-button {
+      width:90px;
+    }
+    </style>
     <div id='container'>
-      <div layout center-justified center style='width:50%'>
+      <div layout center-justified center class='aaa-form-controls-box'>
         <div layout horizontal center-justified center>
           <paper-icon-button raised class="disableWaitingforResponse" id="previousButton" icon='arrow-back' on-tap="{{previousClicked}}">
           </paper-icon-button>
